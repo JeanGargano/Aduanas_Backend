@@ -18,7 +18,6 @@ class PedidoRepository(BaseRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
-
             campos = [
                 "id_cliente", "fecha_arribo", "fecha_entrega_transporte", "radicado_dim",
                 "numero_aceptacion", "fecha_aceptacion", "sticker", "dec_valor", "proveedor",
@@ -28,28 +27,22 @@ class PedidoRepository(BaseRepository):
                 "numero_solicitud_invima", "numero_certificado_invima", "fecha_certificado_invima",
                 "registro_de_importacion", "fecha", "bl", "naviera", "moto_nave", "bandera",
                 "viaje", "contenedor", "peso", "manifiesto", "puerto_arribo", "fecha_llegada", "dias_libres",
-                "observaciones", "entrega_transporte"
+                "observaciones", "entrega_transporte", "estado"
             ]
-
             # Genera placeholders (%s, %s, ..., %s)
             placeholders = ', '.join(['%s'] * len(campos))
-
             # Construye SQL dinámicamente
             sql = f"""
                 INSERT INTO Pedido ({', '.join(campos)})
                 VALUES ({placeholders})
             """
-
             # Extrae los valores del modelo
             valores = tuple(getattr(pedido, campo) for campo in campos)
-
             cursor.execute(sql, valores)
             conn.commit()
-
             pedido.id_pedido = cursor.lastrowid
             logger.info(f"Pedido creado con ID: {pedido.id_pedido}")
             return pedido
-
         except Exception as e:
             logger.exception(f"Error al crear pedido: {str(e)}")
             return None
@@ -78,14 +71,28 @@ class PedidoRepository(BaseRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-
-            cursor.execute("SELECT * FROM Pedido WHERE id_cliente = %s", (id_cliente,))
+            cursor.execute("SELECT * FROM Pedido WHERE id_cliente = %s", (id_cliente, ))
             rows = cursor.fetchall()
             pedidos = [PedidoModel(**row) for row in rows]
             return pedidos
-
         except Exception as e:
             logger.exception(f"Error al listar pedidos del cliente: {str(e)}")
+            return []
+        finally:
+            cursor.close()
+            conn.close()
+
+
+    def listar_pedido_por_id(self, id_pedido: int) -> List[PedidoModel]:
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor(dictionary=True)
+            cursor.execute("SELECT * FROM Pedido WHERE id_pedido = %s", (id_pedido, ))
+            rows = cursor.fetchall()
+            pedido = [PedidoModel(**row) for row in rows]
+            return pedido
+        except Exception as e:
+            logger.exception(f"Error el pedido: {str(e)}")
             return []
         finally:
             cursor.close()
@@ -109,7 +116,6 @@ class PedidoRepository(BaseRepository):
             logger.info(f"SQL: {sql}")
             logger.info(f"Valores: {valores}")
             conn.commit()
-
             actualizado = cursor.rowcount > 0
             if actualizado:
                 logger.info(f"Pedido con ID {id_pedido} actualizado")

@@ -66,7 +66,24 @@ class PedidoServiceImp(IPedidoService):
         except Exception as e:
             logger.exception(f"Error al listar pedidos del cliente: {str(e)}")
             raise e
-
+        
+        
+    def listar_pedido_por_id(self, id_pedido: int) -> List[PedidoModel]:
+        try:
+            if not id_pedido:
+                logger.warning("Id del pedido no proporcionado para poder listarlo")
+                raise ValueError("El id es obligatorio")
+            pedido = self.repo.listar_pedido_por_id(id_pedido)
+            if pedido:
+                logger.info(f"Se listo el pedido")
+                return pedido
+            else:
+                logger.info(f"No se encontraron pedidos para el id:  {id_pedido}")
+                return []
+        except Exception as e:
+            logger.exception(f"Error al listar el pedido: {str(e)}")
+            raise e
+        
 
     def actualizar_pedido_por_id(self, id_pedido: int, datos_actualizados: dict) -> bool:
         try:

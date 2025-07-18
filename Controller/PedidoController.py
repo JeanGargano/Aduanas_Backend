@@ -49,6 +49,21 @@ def listar_pedidos_del_cliente(
     except Exception as e:
         raise HTTPException(status_code=500, detail="Error interno del servidor")
     
+
+@router.get("/listar_pedido_por_id")
+def listar_pedido_por_id(
+    id_pedido: int = Query(...),
+    service: PedidoServiceImp = Depends()
+):
+    try:
+        return service.listar_pedido_por_id(id_pedido)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Error interno del servidor")
+    
+
+    
 @router.put("/actualizar_pedido_por_id")
 def actualizar_pedido_por_id(
     id_pedido: int = Query(...),
