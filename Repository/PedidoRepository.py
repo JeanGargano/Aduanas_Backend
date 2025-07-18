@@ -27,7 +27,8 @@ class PedidoRepository(BaseRepository):
                 "fecha_vencimiento", "radicado_invima", "llave", "fecha_radicado_invima",
                 "numero_solicitud_invima", "numero_certificado_invima", "fecha_certificado_invima",
                 "registro_de_importacion", "fecha", "bl", "naviera", "moto_nave", "bandera",
-                "viaje", "contenedor", "peso", "manifiesto", "puerto_arribo", "fecha_llegada"
+                "viaje", "contenedor", "peso", "manifiesto", "puerto_arribo", "fecha_llegada", "dias_libres",
+                "observaciones", "entrega_transporte"
             ]
 
             # Genera placeholders (%s, %s, ..., %s)
@@ -73,12 +74,12 @@ class PedidoRepository(BaseRepository):
             conn.close()
 
 
-    def listar_pedidos_del_cliente(self, cliente_id: int) -> List[PedidoModel]:
+    def listar_pedidos_del_cliente(self, id_cliente: int) -> List[PedidoModel]:
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
 
-            cursor.execute("SELECT * FROM Pedido WHERE id_cliente = %s", (cliente_id,))
+            cursor.execute("SELECT * FROM Pedido WHERE id_cliente = %s", (id_cliente,))
             rows = cursor.fetchall()
             pedidos = [PedidoModel(**row) for row in rows]
             return pedidos
@@ -91,52 +92,29 @@ class PedidoRepository(BaseRepository):
             conn.close()
 
 
-    def eliminar_pedido_por_id(self, id: int) -> bool:
-        try:
-            conn = self.get_connection()
-            cursor = conn.cursor()
-
-            cursor.execute("DELETE FROM Pedido WHERE id_pedido = %s", (id,))
-            conn.commit()
-
-            eliminado = cursor.rowcount > 0
-            if eliminado:
-                logger.info(f"Pedido con ID {id} eliminado")
-            else:
-                logger.info(f"No se encontró pedido con ID {id}")
-            return eliminado
-
-        except Exception as e:
-            logger.exception(f"Error al eliminar pedido: {str(e)}")
-            return False
-        finally:
-            cursor.close()
-            conn.close()
-
-
-    def actualizar_pedido_por_id(self, id: int, datos_actualizados: dict) -> bool:
+    def actualizar_pedido_por_id(self, id_pedido: int, datos_actualizados: dict) -> bool:
         try:
             if not datos_actualizados:
                 logger.warning("No se proporcionaron datos para actualizar")
                 return False
-
             conn = self.get_connection()
             cursor = conn.cursor()
-
             # Armamos el SQL dinámicamente
             campos = ', '.join(f"{k} = %s" for k in datos_actualizados.keys())
             valores = list(datos_actualizados.values())
-            valores.append(id)
+            valores.append(id_pedido)
 
             sql = f"UPDATE Pedido SET {campos} WHERE id_pedido = %s"
             cursor.execute(sql, valores)
+            logger.info(f"SQL: {sql}")
+            logger.info(f"Valores: {valores}")
             conn.commit()
 
             actualizado = cursor.rowcount > 0
             if actualizado:
-                logger.info(f"Pedido con ID {id} actualizado")
+                logger.info(f"Pedido con ID {id_pedido} actualizado")
             else:
-                logger.info(f"No se encontró pedido con ID {id} para actualizar")
+                logger.info(f"No se encontró pedido con ID {id_pedido} para actualizar")
             return actualizado
 
         except Exception as e:

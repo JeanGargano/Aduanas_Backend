@@ -4,6 +4,8 @@ from Model.PedidoModel import PedidoModel
 from fastapi import Depends
 from typing import List
 import logging
+from datetime import datetime
+
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +41,7 @@ class PedidoServiceImp(IPedidoService):
             pedidos = self.repo.listar_pedidos()
             if pedidos:
                 logger.info(f"Se listaron {len(pedidos)} pedidos correctamente")
+                #print(pedidos)
                 return pedidos
             else:
                 logger.info("No se encontraron pedidos")
@@ -48,55 +51,46 @@ class PedidoServiceImp(IPedidoService):
             raise e
 
 
-    def listar_pedidos_del_cliente(self, cliente_id: int) -> List[PedidoModel]:
+    def listar_pedidos_del_cliente(self, id_cliente: int) -> List[PedidoModel]:
         try:
-            if not cliente_id:
-                logger.warning("Cliente_id no proporcionado para listar pedidos")
-                raise ValueError("cliente_id es obligatorio")
-            pedidos = self.repo.listar_pedidos_del_cliente(cliente_id)
+            if not id_cliente:
+                logger.warning("Identificacion del cliente no proporcionada para listar los pedidos")
+                raise ValueError("La identificación es obligatoria")
+            pedidos = self.repo.listar_pedidos_del_cliente(id_cliente)
             if pedidos:
-                logger.info(f"Se listaron {len(pedidos)} pedidos del cliente {cliente_id}")
+                logger.info(f"Se listaron {len(pedidos)} pedidos del cliente {id_cliente}")
                 return pedidos
             else:
-                logger.info(f"No se encontraron pedidos para el cliente {cliente_id}")
+                logger.info(f"No se encontraron pedidos para el cliente {id_cliente}")
                 return []
         except Exception as e:
             logger.exception(f"Error al listar pedidos del cliente: {str(e)}")
             raise e
 
-    def eliminar_pedido_por_id(self, id: int) -> bool:
-        try:
-            if not id:
-                logger.warning("ID no proporcionado para eliminar pedido")
-                raise ValueError("El ID del pedido es obligatorio")
-            eliminado = self.repo.eliminar_pedido_por_id(id)
-            if eliminado:
-                logger.info(f"Pedido con ID {id} eliminado correctamente")
-                return True
-            else:
-                logger.info(f"No se encontró el pedido con ID {id} para eliminar")
-                return False
-        except Exception as e:
-            logger.exception(f"Error al eliminar pedido: {str(e)}")
-            raise e
 
-    def actualizar_pedido_por_id(self, id: int, datos_actualizados: dict) -> bool:
+    def actualizar_pedido_por_id(self, id_pedido: int, datos_actualizados: dict) -> bool:
         try:
-            if not id:
+            if not id_pedido:
                 logger.warning("ID no proporcionado para actualizar pedido")
                 raise ValueError("El ID del pedido es obligatorio")
             if not datos_actualizados:
                 logger.warning("Datos vacíos para actualizar pedido")
                 raise ValueError("Debe proporcionar datos a actualizar")
-            actualizado = self.repo.actualizar_pedido_por_id(id, datos_actualizados)
+            actualizado = self.repo.actualizar_pedido_por_id(id_pedido, datos_actualizados)
             if actualizado:
-                logger.info(f"Pedido con ID {id} actualizado correctamente")
+                logger.info(f"Pedido con ID {id_pedido} actualizado correctamente")
                 return True
             else:
-                logger.info(f"No se encontró el pedido con ID {id} para actualizar")
+                logger.info(f"No se encontró el pedido con ID {id_pedido} para actualizar")
                 return False
         except Exception as e:
             logger.exception(f"Error al actualizar pedido: {str(e)}")
             raise e
+
+        
+    def actualizar_estado_pedido(self, id:int) -> bool:
+        pass
+
+
 
    

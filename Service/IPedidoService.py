@@ -20,16 +20,16 @@ class IPedidoService(ABC):
     def listar_pedidos_del_cliente(self, id_cliente: int) -> List[PedidoModel]:
         pass
 
-    #Metodo abstracto para eliminar pedido por id
-    @abstractmethod
-    def eliminar_pedido_por_id(self, id: int) -> bool:
-       pass
-
     #Metodo abstracto para actualizar pedido por id
     @abstractmethod
-    def actualizar_pedido_por_id(self, id: int) -> bool:
+    def actualizar_pedido_por_id(self, id_pedido: int) -> bool:
         pass
 
+    #Metodo para actualizar el estado de un pedido
+    @abstractmethod
+    def actualizar_estado_pedido(self, id:int) -> bool:
+        pass
 
+   
 
 

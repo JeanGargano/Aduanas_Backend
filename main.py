@@ -1,10 +1,15 @@
 #Flujo principal
-from fastapi import FastAPI, APIRouter
+from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 import uvicorn
 from dotenv import load_dotenv 
 from Controller.PedidoController import router as pedido_router
+from Controller.DriveController import router as drive_router
+import logging
 
+logger = logging.getLogger(__name__)
 
 import logging
 import os
@@ -15,16 +20,25 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+
 #Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
 #Inicializar la aplicación FastAPI
 app = FastAPI()
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    logger.error(f"Error de validación: {exc.errors()}")
+    return JSONResponse(
+        status_code=422,
+        content={"detail": exc.errors()}
+    )
 
 api_router = APIRouter()
 
 # Incluir los controladores en la API
 api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"])
+api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
 
 # Incluir el router principal
 app.include_router(api_router)
