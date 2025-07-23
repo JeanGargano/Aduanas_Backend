@@ -2,7 +2,7 @@
 from configurations import settings
 import mysql.connector
 
-class BaseRepository:
+class MySqlRepository:
     
     def get_connection(self):
         return mysql.connector.connect(

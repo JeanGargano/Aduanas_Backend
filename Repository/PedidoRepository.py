@@ -3,12 +3,12 @@ from typing import List, Optional
 from Model.PedidoModel import PedidoModel
 from configurations import settings
 import logging
-from Repository.BaseRepository import BaseRepository
+from Repository.MySqlRepository import MySqlRepository
 from fastapi import Depends
 
 logger = logging.getLogger(__name__)
 
-class PedidoRepository(BaseRepository):
+class PedidoRepository(MySqlRepository):
 
     #Inicializacion de la conexión
     def __init__(self):
@@ -130,6 +130,17 @@ class PedidoRepository(BaseRepository):
             cursor.close()
             conn.close()
 
-    def actualizar_estado(self, id_pedido: int):
-        pass
-
+    def actualizar_estado(self, id_pedido: int, nuevo_estado: str) -> bool:
+        try:
+            conn = self.get_connection()
+            cursor = conn.cursor()
+            sql = "UPDATE Pedido SET estado = %s WHERE id_pedido = %s"
+            cursor.execute(sql, (nuevo_estado, id_pedido))
+            conn.commit()
+            return cursor.rowcount > 0 
+        except Exception as e:
+            logger.exception(f"Error al actualizar el estado del pedido: {str(e)}")
+            return False
+        finally:
+            cursor.close()
+            conn.close()

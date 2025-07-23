@@ -7,6 +7,7 @@ import uvicorn
 from dotenv import load_dotenv 
 from Controller.PedidoController import router as pedido_router
 from Controller.DriveController import router as drive_router
+from Controller.TwilioController import router as twilio_router
 import logging
 
 logger = logging.getLogger(__name__)
@@ -26,20 +27,13 @@ load_dotenv()
 
 #Inicializar la aplicación FastAPI
 app = FastAPI()
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-    logger.error(f"Error de validación: {exc.errors()}")
-    return JSONResponse(
-        status_code=422,
-        content={"detail": exc.errors()}
-    )
 
 api_router = APIRouter()
 
 # Incluir los controladores en la API
 api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"])
 api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
-
+api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"])
 # Incluir el router principal
 app.include_router(api_router)
     
@@ -55,3 +49,6 @@ app.add_middleware(
 # Ejecutar la aplicación
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
+
+
+

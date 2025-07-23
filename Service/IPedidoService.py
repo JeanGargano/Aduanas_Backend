@@ -31,7 +31,7 @@ class IPedidoService(ABC):
 
     #Metodo para actualizar el estado de un pedido
     @abstractmethod
-    def actualizar_estado_pedido(self, id:int) -> bool:
+    def actualizar_estado(self, id_pedido:int, nuevo_estado: str) -> bool:
         pass
 
    

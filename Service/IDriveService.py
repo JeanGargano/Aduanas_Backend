@@ -1,4 +1,4 @@
-from Model.DriveModel import Drive
+from Model.DriveModel import DriveModel
 from abc import abstractmethod, ABC
 
 class IDriveService(ABC):
@@ -16,5 +16,5 @@ class IDriveService(ABC):
         pass
 
     @abstractmethod
-    def crear_jerarquia_de_carpetas(self, Drive) -> str:
+    def crear_jerarquia_de_carpetas(self, drive: DriveModel) -> str:
         pass

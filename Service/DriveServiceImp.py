@@ -1,6 +1,6 @@
 from drive_config import drive_service
 from Service.IDriveService import IDriveService
-from Model.DriveModel import Drive
+from Model.DriveModel import DriveModel
 import logging
 logger = logging.getLogger(__name__)
 
@@ -46,7 +46,7 @@ class DriveService(IDriveService):
             return carpeta_id
         return self.crear_carpeta(nombre, parent_id)
 
-    def crear_jerarquia_de_carpetas(self, drive: Drive) -> dict:
+    def crear_jerarquia_de_carpetas(self, drive: DriveModel) -> dict:
         """
         Crea la jerarquía:
         Cliente / Documentación / Año / Mes / Número de contrato.

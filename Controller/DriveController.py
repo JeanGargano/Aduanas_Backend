@@ -1,13 +1,14 @@
+#Controlador para el servicio de creacion de carpetas en google Drive
 from fastapi import APIRouter, HTTPException
 from Service.DriveServiceImp import DriveService
-from Model.DriveModel import Drive
+from Model.DriveModel import DriveModel
 from fastapi import Depends, Query, Body
 router = APIRouter()
 
 
 @router.post("/crear_carpetas_drive")
 def crear_carpetas_drive(
-    drive: Drive,
+    drive: DriveModel,
     service: DriveService = Depends()
 ):
     try:

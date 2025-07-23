@@ -1,4 +1,4 @@
-# configurations/drive_config.py
+#Archivo de configuracion para la conexion con el servicio de drive
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 

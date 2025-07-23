@@ -45,5 +45,11 @@ class PedidoModel(BaseModel):
     entrega_transporte: Optional[str] = None
     estado: Optional[str] = "EN PROCESO"
 
+
+
+class Pedido_estado(BaseModel):
+    id_pedido: int
+    nuevo_estado: str
+
     
     

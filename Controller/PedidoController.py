@@ -1,6 +1,7 @@
+#Controlador para manejar todas las solicitudes referentes al pedido
 from fastapi import APIRouter, HTTPException
 from Service.PedidoServiceImp import PedidoServiceImp
-from Model.PedidoModel import PedidoModel
+from Model.PedidoModel import PedidoModel, Pedido_estado
 from fastapi import Depends, Query, Body
 router = APIRouter()
 
@@ -74,7 +75,24 @@ def actualizar_pedido_por_id(
         actualizado = service.actualizar_pedido_por_id(id_pedido, datos_actualizados)
         if not actualizado:
             raise HTTPException(status_code=404, detail="Pedido no encontrado")
-        return {"message": "Pedido actualizado exitosamente actualizado correctamente"}
+        return {"message": "Pedido actualizado correctamente"}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=500, detail="Error interno al actualizar el pedido")
+    
+
+@router.put("/actualizar_estado")
+def actualizar_estado(
+    id_pedido: int = Query(...),
+    datos_actualizados: dict = Body(...),
+    service: PedidoServiceImp = Depends()
+):
+    try:
+        actualizado = service.actualizar_estado(id_pedido, datos_actualizados)
+        if not actualizado:
+            raise HTTPException(status_code=404, detail="Pedido no encontrado")
+        return {"message": "Estado actualizado exitosamente"}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception:

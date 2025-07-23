@@ -105,8 +105,25 @@ class PedidoServiceImp(IPedidoService):
             raise e
 
         
-    def actualizar_estado_pedido(self, id:int) -> bool:
-        pass
+    def actualizar_estado(self, id_pedido:int, nuevo_estado: str) -> bool:
+        try:
+            if not id_pedido:
+                logger.warning("ID no proporcionado para actualizar el estado del pedido")
+                raise ValueError("El ID del pedido es obligatorio")
+            if "estado" not in nuevo_estado or not nuevo_estado["estado"]:
+                logger.warning("Debe proporcionar un nuevo estado para actualizar el pedido")
+                raise ValueError("Nuevo estado no proporcionado")
+            nuevo_estado = nuevo_estado["estado"]
+            actualizado = self.repo.actualizar_estado(id_pedido, nuevo_estado)
+            if actualizado:
+                logger.info(f"Pedido con ID {id_pedido} actualizado correctamente")
+                return True
+            else:
+                logger.info(f"No se encontró el pedido con ID {id_pedido} para actualizar")
+                return False
+        except Exception as e:
+            logger.exception(f"Error al actualizar pedido: {str(e)}")
+            raise e
 
 
 

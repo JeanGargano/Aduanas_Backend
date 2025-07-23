@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class Drive(BaseModel):
+class DriveModel(BaseModel):
     cliente: str
     numero_contrato: str
     year: int
