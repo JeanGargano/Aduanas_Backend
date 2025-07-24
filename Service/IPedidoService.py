@@ -26,7 +26,7 @@ class IPedidoService(ABC):
 
     #Metodo abstracto para actualizar pedido por id
     @abstractmethod
-    def actualizar_pedido_por_id(self, id_pedido: int) -> bool:
+    def actualizar_pedido_por_id(self, id_pedido: int, datos_actualizados: dict) -> bool:
         pass
 
     #Metodo para actualizar el estado de un pedido

@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class ClienteModel(BaseModel):
+class UsuarioModel(BaseModel):
     identificacion: int
     nombre: str
     correo: str
     celular: int
     rol: Optional[str] = "Cliente"
-    contraseña: str
+    contraseña: Optional[str] = ""
