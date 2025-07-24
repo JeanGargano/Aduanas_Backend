@@ -111,20 +111,3 @@ def logear_usuario(
         raise HTTPException(status_code=500, detail="Error interno al logear el usuario")
       
     
-
-@router.put("/actualizar_rol")
-def actualizar_rol(
-    data: dict = Body(...),
-    service: UsuarioServiceImp = Depends()
-):
-    try:
-        identificacion = data["identificacion"]
-        nuevo_rol = data["rol"]
-        actualizado = service.actualizar_rol(identificacion, nuevo_rol)
-        if not actualizado:
-            raise HTTPException(status_code=404, detail="Usuario no encontrado")
-        return {"message": "Rol actualizado exitosamente"}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception:
-        raise HTTPException(status_code=500, detail="Error interno al actualizar el rol del usuario")

@@ -102,23 +102,3 @@ class UsuarioServiceImp(IUsuarioService):
 
 
 
-
-    def actualizar_rol(self, identificacion:int, nuevo_rol: str) -> bool:
-        try:
-            if not identificacion:
-                logger.warning("ID no proporcionado para actualizar el rol del usuario")
-                raise ValueError("El ID del usuario es obligatorio")
-            if "rol" not in nuevo_rol or not nuevo_rol["rol"]:
-                logger.warning("Debe proporcionar un nuevo rol para actualizar el usuario")
-                raise ValueError("Nuevo rol no proporcionado")
-            actualizado = self.repo.actualizar_rol(identificacion, identificacion)
-            if actualizado:
-                logger.info(f"Rol del Usuario con ID {identificacion} actualizado correctamente")
-                return True
-            else:
-                logger.info(f"No se encontró el usuario con ID {identificacion} para actualizar su rol")
-                return False
-        except Exception as e:
-            logger.exception(f"Error al actualizar rol del usuario: {str(e)}")
-            raise e
-

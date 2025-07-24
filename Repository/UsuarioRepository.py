@@ -131,20 +131,4 @@ class UsuarioRepository(MySqlRepository):
             conn.close()
 
 
-    def actualizar_rol(self, identificacion: int, nuevo_rol: str) -> bool:
-        try:
-            conn = self.get_connection()
-            cursor = conn.cursor()
-            sql = "UPDATE Usuario SET rol = %s WHERE id_pedido = %s"
-            cursor.execute(sql, (nuevo_rol, identificacion))
-            conn.commit()
-            return cursor.rowcount > 0 
-        except Exception as e:
-            logger.exception(f"Error al actualizar el rol del usuario: {str(e)}")
-            return False
-        finally:
-            cursor.close()
-            conn.close()
-
-
 

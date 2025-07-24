@@ -37,13 +37,6 @@ class IUsuarioService(ABC):
         pass
 
 
-    #Metodo Abstracto para actualizar rol 
-    @abstractmethod
-    def actualizar_rol(self, identificacion: str, nuevo_rol: str) -> bool:
-        pass
-    
-
-
    
 
 
