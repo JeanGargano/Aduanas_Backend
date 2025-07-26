@@ -9,6 +9,7 @@ from Controller.PedidoController import router as pedido_router
 from Controller.DriveController import router as drive_router
 from Controller.TwilioController import router as twilio_router
 from Controller.UsuarioController import router as usuario_router
+from Controller.NotificacionController import router as notificacion_router
 import logging
 
 logger = logging.getLogger(__name__)
@@ -36,6 +37,7 @@ api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"])
 api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
 api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"])
 api_router.include_router(usuario_router, prefix="/usuario", tags=["Usuario"])
+api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"])
 # Incluir el router principal
 app.include_router(api_router)
     

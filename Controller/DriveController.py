@@ -1,4 +1,3 @@
-#Controlador para el servicio de creacion de carpetas en google Drive
 from fastapi import APIRouter, HTTPException
 from Service.DriveServiceImp import DriveService
 from Model.DriveModel import DriveModel

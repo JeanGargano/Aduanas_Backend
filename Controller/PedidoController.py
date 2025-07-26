@@ -1,4 +1,3 @@
-#Controlador para manejar todas las solicitudes referentes al pedido
 from fastapi import APIRouter, HTTPException
 from Service.PedidoServiceImp import PedidoServiceImp
 from Model.PedidoModel import PedidoModel, Pedido_estado

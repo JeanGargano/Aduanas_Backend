@@ -14,7 +14,7 @@ class UsuarioRepository(MySqlRepository):
     def __init__(self):
         logger.info("ClienteRepository inicializado")
     
-    def crear_usuario(self, usuario: UsuarioModel):
+    def crear_usuario(self, usuario: UsuarioModel) -> str:
         try:
 
             conn = self.get_connection()
@@ -29,7 +29,7 @@ class UsuarioRepository(MySqlRepository):
             cursor.execute(sql, valores)
             conn.commit()
             logger.info(f"Usuario creado con éxito: {usuario.nombre}")
-            return True
+            return "True"
         except mysql.connector.Error as e:
             logger.error(f"Error al crear el usuario: {e}")
             conn.rollback()

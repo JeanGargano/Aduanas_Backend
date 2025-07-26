@@ -1,4 +1,3 @@
-#Controlador para manejar todas las solicitudes referentes al usuario
 from fastapi import APIRouter, HTTPException
 import logging
 from Service.UsuarioServiceImp import UsuarioServiceImp

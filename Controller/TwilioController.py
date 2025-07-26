@@ -1,4 +1,3 @@
-#Controlador para manejar todas las solicitudes referentes al servicio de mensajeria
 from fastapi import APIRouter, Depends
 from Service.TwilioServiceImp import TwilioServiceImp
 from Model.TwilioModel import TwilioModel
