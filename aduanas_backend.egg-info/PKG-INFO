@@ -1,0 +1,20 @@
+Metadata-Version: 2.4
+Name: aduanas-backend
+Version: 0.1.0
+Summary: Backend del sistema de aduanas
+Author-email: Jean Alfred Gargano <jeana.gargano@gmail.com>
+Requires-Dist: fastapi==0.115.12
+Requires-Dist: uvicorn==0.34.1
+Requires-Dist: pydantic==2.11.3
+Requires-Dist: pydantic-settings==2.9.1
+Requires-Dist: python-dotenv==1.1.0
+Requires-Dist: bcrypt==4.0.1
+Requires-Dist: requests==2.32.3
+Requires-Dist: mysql-connector-python==8.4.0
+Requires-Dist: google-api-python-client==2.130.0
+Requires-Dist: google-auth==2.29.0
+Requires-Dist: google-auth-httplib2==0.2.0
+Requires-Dist: google-auth-oauthlib==1.2.0
+Requires-Dist: twilio==9.0.4
+Requires-Dist: pytest
+Requires-Dist: pytest-mock
