@@ -1,4 +1,3 @@
-# services/UsuarioServiceImp.py
 from Service.IUsuarioService import IUsuarioService
 from Repository.UsuarioRepository import UsuarioRepository
 from Model.UsuarioModel import UsuarioModel
@@ -22,6 +21,11 @@ class UsuarioServiceImp(IUsuarioService):
         try:
             if not usuario or not usuario.nombre or not usuario.identificacion or not usuario.correo:
                 raise ValueError("Datos de usuario incompletos o inválidos.")
+
+            usuario_existente = self.repo.buscar_usuario(usuario.identificacion)
+            if usuario_existente:
+                raise ValueError("El usuario con esa identificación ya existe.")
+
             self.repo.crear_usuario(usuario)
             return "Usuario creado exitosamente"
         except Exception as e:
@@ -93,7 +97,7 @@ class UsuarioServiceImp(IUsuarioService):
                 logger.warning(f"Intento de login fallido")
                 raise ValueError("Identificación o contraseña inválidas")
 
-            logger.info(f"Usuario autenticado correctamente: {identificacion}")
+            logger.info(f"Usuario autenticado correctamente")
             return UsuarioModel(**usuario)
 
         except Exception as e:

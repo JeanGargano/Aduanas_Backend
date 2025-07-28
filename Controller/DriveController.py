@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from Service.DriveServiceImp import DriveService
 from Model.DriveModel import DriveModel
-from fastapi import Depends, Query, Body
+from fastapi import Depends
 router = APIRouter()
 
 
@@ -14,7 +14,6 @@ def crear_carpetas_drive(
         res = service.crear_jerarquia_de_carpetas(drive)
         resumen = res["resumen"]
 
-        # Ver si al menos una fue creada
         if any(v == "creada" for v in resumen.values()):
             message = "Carpetas creadas exitosamente"
         else:

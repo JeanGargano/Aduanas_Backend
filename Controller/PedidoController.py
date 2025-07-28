@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from Service.PedidoServiceImp import PedidoServiceImp
-from Model.PedidoModel import PedidoModel, Pedido_estado
+from Model.PedidoModel import PedidoModel
 from fastapi import Depends, Query, Body
 router = APIRouter()
 
@@ -80,19 +80,3 @@ def actualizar_pedido_por_id(
     except Exception:
         raise HTTPException(status_code=500, detail="Error interno al actualizar el pedido")
     
-
-@router.put("/actualizar_estado")
-def actualizar_estado(
-    id_pedido: int = Query(...),
-    datos_actualizados: dict = Body(...),
-    service: PedidoServiceImp = Depends()
-):
-    try:
-        actualizado = service.actualizar_estado(id_pedido, datos_actualizados)
-        if not actualizado:
-            raise HTTPException(status_code=404, detail="Pedido no encontrado")
-        return {"message": "Estado actualizado exitosamente"}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception:
-        raise HTTPException(status_code=500, detail="Error interno al actualizar el pedido")

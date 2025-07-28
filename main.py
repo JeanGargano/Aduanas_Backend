@@ -1,4 +1,3 @@
-#Flujo principal
 from fastapi import FastAPI, APIRouter, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -24,24 +23,22 @@ logging.basicConfig(
 )
 
 
-#Cargar variables de entorno desde el archivo .env
 load_dotenv()
 
-#Inicializar la aplicación FastAPI
 app = FastAPI()
 
 api_router = APIRouter()
 
-# Incluir los controladores en la API
 api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"])
 api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
 api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"])
 api_router.include_router(usuario_router, prefix="/usuario", tags=["Usuario"])
 api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"])
-# Incluir el router principal
+
+
 app.include_router(api_router)
     
-# Configurar CORS
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -50,7 +47,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Ejecutar la aplicación
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
 

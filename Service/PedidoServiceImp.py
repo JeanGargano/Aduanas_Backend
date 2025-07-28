@@ -4,7 +4,6 @@ from Model.PedidoModel import PedidoModel
 from fastapi import Depends
 from typing import List
 import logging
-from datetime import datetime
 
 
 logger = logging.getLogger(__name__)
@@ -19,17 +18,16 @@ class PedidoServiceImp(IPedidoService):
                 logger.warning("Pedido inválido: objeto vacío o nulo")
                 raise ValueError("El pedido no puede ser nulo")
 
-            # Si al menos tiene el campo id_cliente, lo aceptamos:
             if not pedido.id_cliente:
                 logger.warning("Pedido inválido: falta id_cliente")
                 raise ValueError("id_cliente es obligatorio para crear el pedido")
 
             creado = self.repo.crear_pedido(pedido)
             if creado:
-                logger.info(f"Pedido creado correctamente: {creado}")
-                return f"Pedido creado con ID: {creado.id_pedido}"
+                logger.info(f"Pedido creado correctamente")
+                return f"Pedido creado exitosamente"
             else:
-                logger.error("No se pudo crear el pedido en el repositorio")
+                logger.error("No se pudo crear el pedido")
                 raise Exception("Error interno al guardar el pedido")
 
         except Exception as e:
@@ -105,25 +103,6 @@ class PedidoServiceImp(IPedidoService):
             raise e
 
         
-    def actualizar_estado(self, id_pedido:int, nuevo_estado: str) -> bool:
-        try:
-            if not id_pedido:
-                logger.warning("ID no proporcionado para actualizar el estado del pedido")
-                raise ValueError("El ID del pedido es obligatorio")
-            if "estado" not in nuevo_estado or not nuevo_estado["estado"]:
-                logger.warning("Debe proporcionar un nuevo estado para actualizar el pedido")
-                raise ValueError("Nuevo estado no proporcionado")
-            nuevo_estado = nuevo_estado["estado"]
-            actualizado = self.repo.actualizar_estado(id_pedido, nuevo_estado)
-            if actualizado:
-                logger.info(f"Pedido con ID {id_pedido} actualizado correctamente")
-                return True
-            else:
-                logger.info(f"No se encontró el pedido con ID {id_pedido} para actualizar")
-                return False
-        except Exception as e:
-            logger.exception(f"Error al actualizar pedido: {str(e)}")
-            raise e
 
 
 

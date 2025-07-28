@@ -1,39 +1,34 @@
 import mysql.connector
-from typing import List, Optional
+from typing import List
 from Model.UsuarioModel import UsuarioModel
-from configurations import settings
 import logging
 from Repository.MySqlRepository import MySqlRepository
-from fastapi import Depends
 
 logger = logging.getLogger(__name__)
 
 class UsuarioRepository(MySqlRepository):
 
-    #Inicializacion de la conexión
     def __init__(self):
-        logger.info("ClienteRepository inicializado")
+        super().__init__()
     
     def crear_usuario(self, usuario: UsuarioModel) -> str:
         try:
-
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Usuario WHERE identificacion = %s", (usuario.identificacion,))
-            existente = cursor.fetchone()
-            if existente:
-                raise ValueError("El usuario con esa identificación ya existe")
-
             sql = "INSERT INTO Usuario (identificacion, nombre, correo, celular) VALUES (%s, %s, %s, %s)"
             valores = (usuario.identificacion, usuario.nombre, usuario.correo, usuario.celular)
             cursor.execute(sql, valores)
             conn.commit()
             logger.info(f"Usuario creado con éxito: {usuario.nombre}")
-            return "True"
+            return "Creado"
         except mysql.connector.Error as e:
             logger.error(f"Error al crear el usuario: {e}")
             conn.rollback()
             raise
+        finally:
+            cursor.close()
+            conn.close()
+
 
 
 
@@ -68,7 +63,7 @@ class UsuarioRepository(MySqlRepository):
 
         except Exception as e:
             logger.exception(f"Error al listar usuario por ID: {str(e)}")
-            raise  # Importante: relanzar la excepción para que la capa superior la maneje
+            raise  
         finally:
             cursor.close()
             conn.close()

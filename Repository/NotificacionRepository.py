@@ -1,18 +1,15 @@
 import mysql.connector
-from typing import List, Optional
+from typing import List
 from Model.NotificacionModel import NotificacionModel
-from configurations import settings
 import logging
 from Repository.MySqlRepository import MySqlRepository
-from fastapi import Depends
 
 logger = logging.getLogger(__name__)
 
 class NotificacionRepository(MySqlRepository):
 
-    #Inicializacion de la conexión
     def __init__(self):
-        logger.info("Notificacion Repository inicializado")
+        super().__init__()
     
     def crear_notificacion(self, notificacion: NotificacionModel) -> NotificacionModel:
         try:
@@ -22,7 +19,7 @@ class NotificacionRepository(MySqlRepository):
             valores = (notificacion.usuario_id, notificacion.pedido_id, notificacion.mensaje)
             cursor.execute(sql, valores)
             conn.commit()
-            notificacion.id_notificacion = cursor.lastrowid  #asignamos el ID generado
+            notificacion.id_notificacion = cursor.lastrowid 
             logger.info(f"Notificacion creada con éxito")
             return notificacion
         except mysql.connector.Error as e:
@@ -47,7 +44,7 @@ class NotificacionRepository(MySqlRepository):
             cursor.close()
             conn.close()
 
-    def listar_mis_notificaciones(self, usuario_id: int):
+    def listar_mis_notificaciones(self, usuario_id: int) ->List[NotificacionModel]:
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)

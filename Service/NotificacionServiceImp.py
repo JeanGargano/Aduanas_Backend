@@ -4,7 +4,6 @@ from Model.NotificacionModel import NotificacionModel
 from fastapi import Depends
 from typing import List
 import logging
-from datetime import datetime
 
 
 logger = logging.getLogger(__name__)
@@ -63,5 +62,5 @@ class NotificacionServiceImp(INotificacionService):
                 logger.info(f"No se encontraron notificaciones para el cliente {usuario_id}")
                 return []
         except Exception as e:
-            logger.exception(f"Error al listar pedidos del cliente: {str(e)}")
+            logger.exception(f"Error al listar notificaciones del cliente: {str(e)}")
             raise e
