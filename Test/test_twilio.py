@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, create_autospec
-from Service.TwilioServiceImp import TwilioServiceImp
-from Model.TwilioModel import TwilioModel
-from Repository.TwilioRepository import TwilioRepository
+from app.Service.TwilioServiceImp import TwilioServiceImp
+from app.Model.TwilioModel import TwilioModel
+from app.Repository.TwilioRepository import TwilioRepository
 
 class TestTwilioServiceImp:
     @pytest.fixture

@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, create_autospec
-from Service.UsuarioServiceImp import UsuarioServiceImp, verificar_password
-from Model.UsuarioModel import UsuarioModel
-from Repository.UsuarioRepository import UsuarioRepository
+from app.Service.UsuarioServiceImp import UsuarioServiceImp, verificar_password
+from app.Model.UsuarioModel import UsuarioModel
+from app.Repository.UsuarioRepository import UsuarioRepository
 import bcrypt
 
 class TestUsuarioServiceImp:

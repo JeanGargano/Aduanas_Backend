@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, create_autospec
-from Service.NotificacionServiceImp import NotificacionServiceImp
-from Model.NotificacionModel import NotificacionModel
-from Repository.NotificacionRepository import NotificacionRepository
+from app.Service.NotificacionServiceImp import NotificacionServiceImp
+from app.Model.NotificacionModel import NotificacionModel
+from app.Repository.NotificacionRepository import NotificacionRepository
 
 class TestNotificacionServiceImp:
     @pytest.fixture

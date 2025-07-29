@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, create_autospec
-from Service.PedidoServiceImp import PedidoServiceImp
-from Model.PedidoModel import PedidoModel
-from Repository.PedidoRepository import PedidoRepository
+from app.Service.PedidoServiceImp import PedidoServiceImp
+from app.Model.PedidoModel import PedidoModel
+from app.Repository.PedidoRepository import PedidoRepository
 from datetime import date
 
 class TestPedidoServiceImp:
