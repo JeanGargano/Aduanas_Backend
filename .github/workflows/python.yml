@@ -1,32 +1,26 @@
-name: Python CI
+    name: Python CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:   
-    branches: [ "main" ]
+    on:
+      push:
+        branches: [ "main" ]
+      pull_request:   
+        branches: [ "main" ]
 
-permissions:
-  contents: read    
+    permissions:
+      contents: read    
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+    jobs:
+      build:
 
-    steps:
-    - uses: actions/checkout@v4
+        runs-on: ubuntu-latest
 
-    - name: Set up Python 3.12
-      uses: actions/setup-python@v3
-      with:
-        python-version: "3.12"
-
-    - name: Install dependencies
-      run: pip install -r requirements.txt
-
-    - name: Set environment variables from Aduanas_Secret
-      run: |
-        echo "${{ secrets.ADUANAS_SECRET }}" >> $GITHUB_ENV
-
-    - name: Test with pytest
-      run: python -m pytest
+        steps:
+        - uses: actions/checkout@v4
+        - name: Set up Python 3.12
+          uses: actions/setup-python@v3
+          with:
+            python-version: "3.12"
+        - name: Install dependencies
+          run: pip install -r requirements.txt
+        - name: Test with pytest
+          run: python -m pytest
