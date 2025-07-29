@@ -1,10 +1,19 @@
 import pytest
-from unittest.mock import MagicMock, create_autospec
+from unittest.mock import create_autospec, patch
 from app.Service.NotificacionServiceImp import NotificacionServiceImp
 from app.Model.NotificacionModel import NotificacionModel
 from app.Repository.NotificacionRepository import NotificacionRepository
 
 class TestNotificacionServiceImp:
+    @pytest.fixture(autouse=True)
+    def mock_dependencies(self):
+        with patch('app.Repository.MySqlRepository.settings') as mock_settings:
+            mock_settings.MYSQL_HOST = "localhost"
+            mock_settings.MYSQL_USER = "test_user"
+            mock_settings.MYSQL_PASSWORD = "test_password"
+            mock_settings.MYSQL_DATABASE = "test_db"
+            yield
+
     @pytest.fixture
     def mock_repo(self):
         return create_autospec(NotificacionRepository)
@@ -12,6 +21,7 @@ class TestNotificacionServiceImp:
     @pytest.fixture
     def service(self, mock_repo):
         return NotificacionServiceImp(repo=mock_repo)
+
 
     @pytest.fixture
     def sample_notificacion(self):
