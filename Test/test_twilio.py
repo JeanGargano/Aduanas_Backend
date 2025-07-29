@@ -1,18 +1,10 @@
 import pytest
-from unittest.mock import MagicMock, create_autospec, patch
+from unittest.mock import create_autospec
 from app.Service.TwilioServiceImp import TwilioServiceImp
 from app.Model.TwilioModel import TwilioModel
 from app.Repository.TwilioRepository import TwilioRepository
 
 class TestTwilioServiceImp:
-    @pytest.fixture(autouse=True)
-    def mock_twilio(self):
-        with patch('app.Repository.TwilioRepository.Client') as mock_twilio_client:
-            mock_instance = MagicMock()
-            mock_instance.messages.create.return_value = MagicMock(sid="dummy_sid")
-            mock_twilio_client.return_value = mock_instance
-            yield
-
     @pytest.fixture
     def mock_repo(self):
         return create_autospec(TwilioRepository)

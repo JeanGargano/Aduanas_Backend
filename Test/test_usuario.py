@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import MagicMock, create_autospec
+from unittest.mock import create_autospec
 from app.Service.UsuarioServiceImp import UsuarioServiceImp, verificar_password
 from app.Model.UsuarioModel import UsuarioModel
 from app.Repository.UsuarioRepository import UsuarioRepository
