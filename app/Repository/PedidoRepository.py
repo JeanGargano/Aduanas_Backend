@@ -10,7 +10,7 @@ class PedidoRepository(MySqlRepository):
     def __init__(self):
         super().__init__()
     
-    def crear_pedido(self, pedido: PedidoModel) -> str:
+    def crear_pedido(self, pedido: PedidoModel) -> PedidoModel:
         try:
             conn = self.get_connection()
             cursor = conn.cursor()

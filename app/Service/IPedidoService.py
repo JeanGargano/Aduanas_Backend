@@ -6,7 +6,7 @@ class IPedidoService(ABC):
 
     
     @abstractmethod
-    def crear_pedido(self, pedido:PedidoModel) -> str:
+    def crear_pedido(self, pedido:PedidoModel) -> PedidoModel:
         pass
 
     

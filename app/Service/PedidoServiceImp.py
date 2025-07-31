@@ -12,7 +12,7 @@ class PedidoServiceImp(IPedidoService):
     def __init__(self, repo: PedidoRepository = Depends()):
         self.repo = repo
 
-    def crear_pedido(self, pedido: PedidoModel) -> str:
+    def crear_pedido(self, pedido: PedidoModel) -> PedidoModel:
         try:
             if not pedido:
                 logger.warning("Pedido inválido: objeto vacío o nulo")
@@ -22,10 +22,10 @@ class PedidoServiceImp(IPedidoService):
                 logger.warning("Pedido inválido: falta id_cliente")
                 raise ValueError("id_cliente es obligatorio para crear el pedido")
 
-            creado = self.repo.crear_pedido(pedido)
-            if creado:
+            res = self.repo.crear_pedido(pedido)
+            if res:
                 logger.info(f"Pedido creado correctamente")
-                return f"Pedido creado exitosamente"
+                return res
             else:
                 logger.error("No se pudo crear el pedido")
                 raise Exception("Error interno al guardar el pedido")

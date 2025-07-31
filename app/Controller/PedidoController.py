@@ -12,7 +12,8 @@ def crear_pedido(
     try:
         res = service.crear_pedido(pedido)
         if res:
-            return {f"Pedido creado exitosamente"}
+            return res.id_pedido
+
         else:
             raise HTTPException(status_code=500, detail="Error en el servicio")
     except ValueError as e:
