@@ -30,7 +30,7 @@ class TestPedidoServiceImp:
         result = service.crear_pedido(sample_pedido)
         
         # Assert
-        assert result == "Pedido creado exitosamente"
+        assert result == 1
         mock_repo.crear_pedido.assert_called_once_with(sample_pedido)
 
 

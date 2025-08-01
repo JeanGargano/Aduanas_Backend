@@ -6,5 +6,5 @@ class UsuarioModel(BaseModel):
     nombre: str
     correo: str
     celular: int
-    rol: Optional[str] = "Cliente"
+    rol: Optional[str]
     contraseña: Optional[str] = ""

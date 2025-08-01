@@ -18,7 +18,8 @@ class TestNotificacionServiceImp:
         return NotificacionModel(
             usuario_id=1,
             pedido_id=1,
-            mensaje="Test message"
+            mensaje="Test message",
+            fecha= "2025-07-31 10:45:00"
         )
 
     def test_crear_notificacion_valida(self, service, mock_repo, sample_notificacion):
