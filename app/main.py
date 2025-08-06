@@ -1,5 +1,7 @@
 import sys
 import os
+from fastapi import Depends
+from app.Service.Autenticacion import get_current_user
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -8,11 +10,11 @@ from fastapi import FastAPI, APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from dotenv import load_dotenv 
-from Controller.PedidoController import router as pedido_router
-from Controller.DriveController import router as drive_router
-from Controller.TwilioController import router as twilio_router
-from Controller.UsuarioController import router as usuario_router
-from Controller.NotificacionController import router as notificacion_router
+from app.Controller.PedidoController import router as pedido_router
+from app.Controller.DriveController import router as drive_router
+from app.Controller.TwilioController import router as twilio_router
+from app.Controller.UsuarioController import router as usuario_router
+from app.Controller.NotificacionController import router as notificacion_router
 import logging
 
 logger = logging.getLogger(__name__)
@@ -33,12 +35,11 @@ app = FastAPI()
 
 api_router = APIRouter()
 
-api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"])
-api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
-api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"])
+api_router.include_router(pedido_router, prefix="/pedido", tags=["Pedido"], dependencies=[Depends(get_current_user)])
+api_router.include_router(drive_router, prefix="/drive", tags=["Drive"], dependencies=[Depends(get_current_user)])
+api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"], dependencies=[Depends(get_current_user)])
 api_router.include_router(usuario_router, prefix="/usuario", tags=["Usuario"])
-api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"])
-
+api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"], dependencies=[Depends(get_current_user)])
 
 app.include_router(api_router)
     

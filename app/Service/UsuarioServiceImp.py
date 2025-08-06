@@ -4,7 +4,9 @@ from app.Model.UsuarioModel import UsuarioModel
 from typing import List
 from fastapi import Depends
 import bcrypt
-import logging
+import logging 
+from app.Service.AutenticacionUtil import crear_access_token
+from datetime import timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -86,23 +88,17 @@ class UsuarioServiceImp(IUsuarioService):
             raise
 
 
-    def logear_usuario(self, identificacion: int, contraseña: str) -> UsuarioModel:
-        try:
-            if not identificacion or not contraseña:
-                raise ValueError("Identificación y contraseña son obligatorias")
+    def autenticar_usuario(self, identificacion: int, password: str):
+        usuario = self.repo.buscar_usuario(identificacion)
+        if not usuario:
+            return None
+        if not verificar_password(password, usuario["contraseña"]):
+            return None
+        return usuario
 
-            usuario = self.repo.buscar_usuario(identificacion)
-
-            if not usuario or not verificar_password(contraseña, usuario["contraseña"]):
-                logger.warning(f"Intento de login fallido")
-                raise ValueError("Identificación o contraseña inválidas")
-
-            logger.info(f"Usuario autenticado correctamente")
-            return UsuarioModel(**usuario)
-
-        except Exception as e:
-            logger.error(f"Error al logear usuario: {e}")
-            raise
+    def crear_token_para_usuario(self, identificacion: int):
+        access_token = crear_access_token({"sub": str(identificacion)})
+        return access_token
 
 
 

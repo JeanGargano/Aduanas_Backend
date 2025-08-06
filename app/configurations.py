@@ -10,7 +10,9 @@ class Settings(BaseSettings):
     MYSQL_DATABASE: str
     twilio_account_sid: str
     twilio_auth_token: str
-    twilio_phone_number: str 
+    twilio_phone_number: str
+    SECRET_KEY: str
+    ALGORITHM: str = "HS256"
 
     class Config:
         env_file = ".env"

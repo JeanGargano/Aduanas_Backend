@@ -30,10 +30,7 @@ class IUsuarioService(ABC):
         pass
     
 
-    
-    @abstractmethod
-    def logear_usuario(self, identificacion: str, contraseña: str) -> UsuarioModel:
-        pass
+
 
 
    
