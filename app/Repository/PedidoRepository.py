@@ -109,8 +109,6 @@ class PedidoRepository(MySqlRepository):
 
             sql = f"UPDATE Pedido SET {campos} WHERE id_pedido = %s"
             cursor.execute(sql, valores)
-            logger.info(f"SQL: {sql}")
-            logger.info(f"Valores: {valores}")
             conn.commit()
             actualizado = cursor.rowcount > 0
             if actualizado:
