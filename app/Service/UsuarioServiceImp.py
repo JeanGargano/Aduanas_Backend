@@ -5,14 +5,9 @@ from typing import List
 from fastapi import Depends
 import bcrypt
 import logging 
-from app.Service.AutenticacionUtil import crear_access_token
-from datetime import timedelta
+from app.Service.AutenticacionUtil import crear_access_token, verificar_password
 
 logger = logging.getLogger(__name__)
-
-
-def verificar_password(plain_password: str, hashed_password: str) -> bool:
-    return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
 class UsuarioServiceImp(IUsuarioService):

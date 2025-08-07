@@ -94,14 +94,14 @@ def asignar_contraseña(
     
 
 @router.post("/autenticar_usuario")
-def login_for_access_token(
+def autenticar_usuario(
     form_data: OAuth2PasswordRequestForm = Depends(),
     service: UsuarioServiceImp = Depends()
 ):
     try:
         identificacion = int(form_data.username)
     except ValueError:
-        raise HTTPException(status_code=400, detail="Identificación inválida")
+        raise HTTPException(status_code=400, detail="Identiifcación inválida")
 
     user = service.autenticar_usuario(identificacion, form_data.password)
     if not user:

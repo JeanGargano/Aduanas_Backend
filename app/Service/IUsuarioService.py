@@ -28,7 +28,14 @@ class IUsuarioService(ABC):
     @abstractmethod
     def asignar_contraseña(self, identificacion: int, contraseña: str) -> bool:
         pass
+
+    @abstractmethod
+    def autenticar_usuario(self, identificacion: int, password: str) -> UsuarioModel:
+        pass
     
+    @abstractmethod
+    def crear_token_para_usuario(self, identificacion:int) -> str:
+        pass
 
 
 

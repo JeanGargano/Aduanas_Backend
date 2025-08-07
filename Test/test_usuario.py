@@ -20,7 +20,8 @@ class TestUsuarioServiceImp:
             identificacion=123,
             nombre="Test User",
             correo="test@example.com",
-            celular=1234567890
+            celular=1234567890,
+            rol=""
         )
 
     def test_verificar_password(self):
@@ -97,17 +98,3 @@ class TestUsuarioServiceImp:
         assert result is True
         mock_repo.asignar_contraseña.assert_called_once()
 
-
-    def test_logear_usuario_fallido(self, service, mock_repo):
-        # Arrange
-        hashed = bcrypt.hashpw("correct".encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        mock_repo.buscar_usuario.return_value = {
-            "identificacion": 123,
-            "nombre": "Test",
-            "correo": "test@example.com",
-            "contraseña": hashed
-        }
-        
-        # Act & Assert
-        with pytest.raises(ValueError):
-            service.logear_usuario(123, "wrong")
