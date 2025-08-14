@@ -120,7 +120,8 @@ def autenticar_usuario(
             "identificacion": user["identificacion"],
             "nombre": user["nombre"],
             "correo": user["correo"],
-            "celular": user["celular"]
+            "celular": user["celular"],
+            "rol": user["rol"]
         }
     }
     
