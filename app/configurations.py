@@ -3,6 +3,10 @@ from pydantic_settings import BaseSettings
 import mysql.connector
 
 
+class IgnoredType:
+    pass
+
+
 class Settings(BaseSettings):
     MYSQL_HOST: str
     MYSQL_USER: str
@@ -12,7 +16,11 @@ class Settings(BaseSettings):
     twilio_auth_token: str
     twilio_phone_number: str
     SECRET_KEY: str
-    ALGORITHM: str = "HS256"
+    ALGORITHM: str 
+    REMITENTE: str
+    CONTRASENA: str
+    SMTP_SERVER: str
+    SMTP_PORT: int = IgnoredType()
 
     class Config:
         env_file = ".env"

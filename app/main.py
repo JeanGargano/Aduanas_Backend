@@ -15,6 +15,7 @@ from app.Controller.DriveController import router as drive_router
 from app.Controller.TwilioController import router as twilio_router
 from app.Controller.UsuarioController import router as usuario_router
 from app.Controller.NotificacionController import router as notificacion_router
+from app.Controller.EmailController import router as email_router
 import logging
 
 logger = logging.getLogger(__name__)
@@ -40,6 +41,7 @@ api_router.include_router(drive_router, prefix="/drive", tags=["Drive"], depende
 api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"], dependencies=[Depends(get_current_user)])
 api_router.include_router(usuario_router, prefix="/usuario", tags=["Usuario"])
 api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"], dependencies=[Depends(get_current_user)])
+api_router.include_router(email_router, prefix="/smtp", tags=["SMTP"])
 
 app.include_router(api_router)
     
