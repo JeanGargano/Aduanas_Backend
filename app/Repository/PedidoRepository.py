@@ -23,7 +23,7 @@ class PedidoRepository(MySqlRepository):
                 "numero_solicitud_invima", "numero_certificado_invima", "fecha_certificado_invima",
                 "registro_de_importacion", "fecha", "bl", "naviera", "moto_nave", "bandera",
                 "viaje", "contenedor", "peso", "manifiesto", "puerto_arribo", "fecha_llegada", "dias_libres",
-                "observaciones", "entrega_transporte", "estado"
+                "observaciones", "entrega_transporte", "estado", "do"
             ]
             # Genera placeholders (%s, %s, ..., %s)
             placeholders = ', '.join(['%s'] * len(campos))

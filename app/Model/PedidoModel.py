@@ -44,6 +44,7 @@ class PedidoModel(BaseModel):
     observaciones: Optional[str] = None
     entrega_transporte: Optional[str] = None
     estado: Optional[str] = "EN PROCESO"
+    do: Optional[str] = None
 
 
 
