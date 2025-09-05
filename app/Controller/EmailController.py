@@ -10,7 +10,7 @@ def enviar_correo(
     service: EmailService = Depends()
 ):
     try:
-        return service.enviar_correo(data)
+        return service.enviarCorreo(data)
     except HTTPException as e:
         raise e
     except Exception as e:

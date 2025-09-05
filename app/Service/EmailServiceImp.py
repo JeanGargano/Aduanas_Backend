@@ -18,7 +18,7 @@ SMTP_PORT = settings.SMTP_PORT
 
 class EmailService(IEmailService):
 
-    def enviar_correo(self, data: EmailModel) -> str:
+    def enviarCorreo(self, data: EmailModel) -> str:
         if not data.destinatario:
             raise HTTPException(status_code=422, detail="El campo 'destinatario' es obligatorio.")
         if not data.asunto.strip():

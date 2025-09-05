@@ -5,6 +5,7 @@ from datetime import date
 class PedidoModel(BaseModel):
     id_pedido: Optional[int] = None
     id_cliente: int
+    fecha_creacion: Optional[date] = None
     fecha_arribo: Optional[date] = None
     fecha_entrega_transporte: Optional[date] = None
     radicado_dim: Optional[int] = None
@@ -29,7 +30,7 @@ class PedidoModel(BaseModel):
     numero_certificado_invima: Optional[int] = None
     fecha_certificado_invima: Optional[date] = None
     registro_de_importacion: Optional[str] = None
-    fecha: Optional[date] = None
+    fecha5: Optional[date] = None
     bl: Optional[str] = None
     naviera: Optional[str] = None
     moto_nave: Optional[str] = None
@@ -43,7 +44,7 @@ class PedidoModel(BaseModel):
     dias_libres: Optional[int] = None
     observaciones: Optional[str] = None
     entrega_transporte: Optional[str] = None
-    estado: Optional[str] = "EN PROCESO"
+    estado: Optional[str] = None
     do: Optional[str] = None
 
 
