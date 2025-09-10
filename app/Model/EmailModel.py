@@ -5,7 +5,7 @@ class EmailModel(BaseModel):
     asunto: str
     numero_contrato: str
     producto: str
-    contender: str
+    contenedor: str
     puerto: str
     dias_libres: str
 

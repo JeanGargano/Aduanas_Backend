@@ -35,7 +35,7 @@ class EmailService(IEmailService):
 
                 - Pedido: {data.numero_contrato}
                 - Producto: {data.producto}
-                - Contenedor: {data.contender}
+                - Contenedor: {data.contenedor}
                 - Días Libres: {data.dias_libres}
                 - Puerto: {data.puerto}
                 """
