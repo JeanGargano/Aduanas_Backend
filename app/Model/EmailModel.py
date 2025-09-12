@@ -8,4 +8,5 @@ class EmailModel(BaseModel):
     contenedor: str
     puerto: str
     dias_libres: str
+    estado: str
 
