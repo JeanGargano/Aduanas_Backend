@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     MYSQL_USER: str
     MYSQL_PASSWORD: str
     MYSQL_DATABASE: str
+    MYSQL_PORT: int = IgnoredType()
     twilio_account_sid: str
     twilio_auth_token: str
     twilio_phone_number: str
@@ -33,7 +34,8 @@ connection = mysql.connector.connect(
     host=settings.MYSQL_HOST,
     user=settings.MYSQL_USER,
     password=settings.MYSQL_PASSWORD,
-    database=settings.MYSQL_DATABASE
+    database=settings.MYSQL_DATABASE,
+    port=settings.MYSQL_PORT
 )
 
 if connection.is_connected():
