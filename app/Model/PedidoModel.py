@@ -30,7 +30,7 @@ class PedidoModel(BaseModel):
     numero_certificado_invima: Optional[int] = None
     fecha_certificado_invima: Optional[date] = None
     registro_de_importacion: Optional[str] = None
-    fecha5: Optional[date] = None
+    fecha: Optional[date] = None
     bl: Optional[str] = None
     naviera: Optional[str] = None
     moto_nave: Optional[str] = None
