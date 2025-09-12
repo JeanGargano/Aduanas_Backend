@@ -10,7 +10,8 @@ class MySqlRepository:
             "host": settings.MYSQL_HOST,
             "user": settings.MYSQL_USER,
             "password": settings.MYSQL_PASSWORD,
-            "database": settings.MYSQL_DATABASE
+            "database": settings.MYSQL_DATABASE,
+            "port": settings.MYSQL_PORT
         }
 
     def get_connection(self):
