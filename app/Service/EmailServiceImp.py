@@ -29,17 +29,31 @@ class EmailService(IEmailService):
             msg["From"] = REMITENTE
             msg["To"] = data.destinatario
             msg["Subject"] = data.asunto
+            estado = data.estado
+            mensaje = ""
+            if(estado == "ENTREGADO"):
+                mensaje = f"""
+                    Buenas tardes, Confirmo entrega:
 
-            mensaje = f"""
-                Buenas tardes, Confirmo entrega:
+                    - Pedido: {data.numero_contrato}
+                    - Producto: {data.producto}
+                    - Contenedor: {data.contenedor}
+                    - Días Libres: {data.dias_libres}
+                    - Puerto: {data.puerto}
+                    """
+                msg.attach(MIMEText(mensaje, "plain"))
 
-                - Pedido: {data.numero_contrato}
-                - Producto: {data.producto}
-                - Contenedor: {data.contenedor}
-                - Días Libres: {data.dias_libres}
-                - Puerto: {data.puerto}
-                """
-            msg.attach(MIMEText(mensaje, "plain"))
+            else:
+                mensaje = f"""
+                    Hola apreciado cliente, el estado de su pedido ha sido actualizado a {estado}:
+                    - Pedido: {data.numero_contrato}
+                    - Producto: {data.producto}
+                    - Contenedor: {data.contenedor}
+                    - Días Libres: {data.dias_libres}
+                    - Puerto: {data.puerto}
+                    """
+                msg.attach(MIMEText(mensaje, "plain"))
+
 
             # Conexión al servidor SMTP
             with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=30) as server:
