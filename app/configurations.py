@@ -22,8 +22,6 @@ class Settings(BaseSettings):
     CONTRASENA: str
     SMTP_SERVER: str
     SMTP_PORT: int = IgnoredType()
-    MYSQL_PORT: int = 3306
-
 
     class Config:
         env_file = ".env"
