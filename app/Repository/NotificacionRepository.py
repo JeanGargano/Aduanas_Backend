@@ -33,7 +33,7 @@ class NotificacionRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Notificacion")
+            cursor.execute("SELECT * FROM notificacion")
             rows = cursor.fetchall()
             notificaciones = [NotificacionModel(**row) for row in rows]
             return notificaciones
@@ -48,7 +48,7 @@ class NotificacionRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Notificacion WHERE usuario_id = %s", (usuario_id, ))
+            cursor.execute("SELECT * FROM notificacion WHERE usuario_id = %s", (usuario_id, ))
             rows = cursor.fetchall()
             usuarios = [NotificacionModel(**row) for row in rows]
             return usuarios

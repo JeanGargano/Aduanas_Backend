@@ -15,7 +15,7 @@ class UsuarioRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            sql = "INSERT INTO Usuario (identificacion, nombre, correo, celular) VALUES (%s, %s, %s, %s)"
+            sql = "INSERT INTO usuario (identificacion, nombre, correo, celular) VALUES (%s, %s, %s, %s)"
             valores = (usuario.identificacion, usuario.nombre, usuario.correo, usuario.celular)
             cursor.execute(sql, valores)
             conn.commit()
@@ -36,7 +36,7 @@ class UsuarioRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Usuario")
+            cursor.execute("SELECT * FROM usuario")
             rows = cursor.fetchall()
             usuarios = [UsuarioModel(**row) for row in rows]
             return usuarios
@@ -52,7 +52,7 @@ class UsuarioRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Usuario WHERE identificacion = %s", (identificacion,))
+            cursor.execute("SELECT * FROM usuario WHERE identificacion = %s", (identificacion,))
             rows = cursor.fetchall()
 
             if not rows:
@@ -76,7 +76,7 @@ class UsuarioRepository(MySqlRepository):
             campos = ', '.join(f"{k} = %s" for k in datos_actualizados.keys())
             valores = list(datos_actualizados.values())
             valores.append(identificacion)
-            sql = f"UPDATE Usuario SET {campos} WHERE identificacion = %s"
+            sql = f"UPDATE usuario SET {campos} WHERE identificacion = %s"
             cursor.execute(sql, valores)
             logger.info(f"SQL: {sql}")
             logger.info(f"Valores: {valores}")
@@ -98,7 +98,7 @@ class UsuarioRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor()
-            sql = "UPDATE Usuario SET contraseña = %s WHERE identificacion = %s"
+            sql = "UPDATE usuario SET contraseña = %s WHERE identificacion = %s"
             cursor.execute(sql, (contraseña_hasheada, identificacion))
             conn.commit()
             actualizado = cursor.rowcount > 0
@@ -115,7 +115,7 @@ class UsuarioRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Usuario WHERE identificacion = %s", (identificacion,))
+            cursor.execute("SELECT * FROM usuario WHERE identificacion = %s", (identificacion,))
             usuario = cursor.fetchone()
             return usuario
         except Exception as e:
