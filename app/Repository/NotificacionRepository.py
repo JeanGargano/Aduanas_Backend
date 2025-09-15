@@ -15,7 +15,7 @@ class NotificacionRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            sql = "INSERT INTO Notificacion (usuario_id, pedido_id, mensaje, fecha) VALUES (%s, %s, %s, %s)"
+            sql = "INSERT INTO notificacion (usuario_id, pedido_id, mensaje, fecha) VALUES (%s, %s, %s, %s)"
             valores = (notificacion.usuario_id, notificacion.pedido_id, notificacion.mensaje, notificacion.fecha)
             cursor.execute(sql, valores)
             conn.commit()
