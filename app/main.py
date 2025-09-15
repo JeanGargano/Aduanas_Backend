@@ -40,7 +40,7 @@ api_router.include_router(drive_router, prefix="/drive", tags=["Drive"])
 api_router.include_router(twilio_router, prefix="/twilio", tags=["Twilio"], dependencies=[Depends(get_current_user)])
 api_router.include_router(usuario_router, prefix="/usuario", tags=["Usuario"])
 api_router.include_router(notificacion_router, prefix="/notificacion", tags=["Notificacion"], dependencies=[Depends(get_current_user)])
-api_router.include_router(email_router, prefix="/smtp", tags=["SMTP"])
+api_router.include_router(email_router, prefix="/sengrid", tags=["sengrid"], dependencies=[Depends(get_current_user)])
 
 app.include_router(api_router)
     
