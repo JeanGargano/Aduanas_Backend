@@ -2,7 +2,7 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
-SERVICE_ACCOUNT_FILE = 'aduanas-backend-28de18b87eee.json'
+SERVICE_ACCOUNT_FILE = '/app/aduanas-backend-28de18b87eee.json'
 SCOPES = ['https://www.googleapis.com/auth/drive']
 
 # Crear credenciales
