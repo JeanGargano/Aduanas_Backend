@@ -31,11 +31,6 @@ def get_drive_service():
         }
 
         
-        # Debug info (puedes quitar esto después)
-        print(f"🔧 Project ID: {service_account_info['project_id']}")
-        print(f"🔧 Client Email: {service_account_info['client_email']}")
-        print(f"🔧 Private Key Length: {len(service_account_info['private_key']) if service_account_info['private_key'] else 0}")
-        
         # Crear credenciales desde el diccionario
         credentials = service_account.Credentials.from_service_account_info(
             service_account_info, scopes=SCOPES
