@@ -29,7 +29,7 @@ class PedidoRepository(MySqlRepository):
             placeholders = ', '.join(['%s'] * len(campos))
             # Construye SQL dinámicamente
             sql = f"""
-                INSERT INTO Pedido ({', '.join(campos)})
+                INSERT INTO pedido ({', '.join(campos)})
                 VALUES ({placeholders})
             """
             # Extrae los valores del modelo
@@ -51,7 +51,7 @@ class PedidoRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Pedido")
+            cursor.execute("SELECT * FROM pedido")
             rows = cursor.fetchall()
             pedidos = [PedidoModel(**row) for row in rows]
             return pedidos
@@ -67,7 +67,7 @@ class PedidoRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Pedido WHERE id_cliente = %s", (id_cliente, ))
+            cursor.execute("SELECT * FROM pedido WHERE id_cliente = %s", (id_cliente, ))
             rows = cursor.fetchall()
             pedidos = [PedidoModel(**row) for row in rows]
             return pedidos
@@ -83,7 +83,7 @@ class PedidoRepository(MySqlRepository):
         try:
             conn = self.get_connection()
             cursor = conn.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM Pedido WHERE id_pedido = %s", (id_pedido, ))
+            cursor.execute("SELECT * FROM pedido WHERE id_pedido = %s", (id_pedido, ))
             rows = cursor.fetchall()
             pedido = [PedidoModel(**row) for row in rows]
             return pedido
@@ -107,7 +107,7 @@ class PedidoRepository(MySqlRepository):
             valores = list(datos_actualizados.values())
             valores.append(id_pedido)
 
-            sql = f"UPDATE Pedido SET {campos} WHERE id_pedido = %s"
+            sql = f"UPDATE pedido SET {campos} WHERE id_pedido = %s"
             cursor.execute(sql, valores)
             conn.commit()
             actualizado = cursor.rowcount > 0
